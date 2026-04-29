@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        .details-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 60%;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        img {
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: orange;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="details-card">
+        <img id="vehicleImage" src="" alt="Vehicle Image">
+        <h1 id="vehicleName"></h1>
+        <h2 id="vehiclePrice"></h2>
+        <p>This vehicle is available for rent with top features and comfort.</p>
+
+        <button onclick="goBack()">Back to Home</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+
+        document.getElementById("vehicleName").innerText = params.get("name");
+        document.getElementById("vehiclePrice").innerText = "₹" + params.get("price") + "/day";
+        document.getElementById("vehicleImage").src = params.get("image");
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+</html>

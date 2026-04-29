@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Rental System</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+
+    <h1>Car & Bike Rental System</h1>
+
+    <div class="container">
+
+        <!-- Swift Car -->
+        <div class="card">
+            <img src="https://imgd.aeplcdn.com/1920x1080/n/cw/ec/159099/swift-exterior-right-front-three-quarter-31.png?isig=0&q=80&q=80.jpg" alt="Swift Car">
+            <h2>Swift Car</h2>
+            <p>Price: ₹1000/day</p>
+            <button onclick="rentVehicle('Swift Car',1000)">Rent Now</button>
+            <button onclick="goToDetails('Swift Car',1000,'https://imgd.aeplcdn.com/1920x1080/n/cw/ec/159099/swift-exterior-right-front-three-quarter-31.png?isig=0&q=80&q=80.jpg')">More Info</button>
+        </div>
+
+        <!-- Honda Bike -->
+        <div class="card">
+            <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--dlx-obd-2b1743781473451.jpg?q=80.jpg" alt="Honda Bike">
+            <h2>Honda Bike</h2>
+            <p>Price: ₹500/day</p>
+            <button onclick="rentVehicle('Honda Bike',500)">Rent Now</button>
+            <button onclick="goToDetails('Honda Bike',500,'https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--dlx-obd-2b1743781473451.jpg?q=80.jpg')">More Info</button>
+        </div>
+
+        <!-- i20 Car -->
+        <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4ygqdlUSis2SSQm-PWOOir-Xt_uBT7h_FlA&s.jpg" alt="i20 Car">
+            <h2>i20 Car</h2>
+            <p>Price: ₹1200/day</p>
+            <button onclick="rentVehicle('i20 Car',1200)">Rent Now</button>
+            <button onclick="goToDetails('i20 Car',1200,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4ygqdlUSis2SSQm-PWOOir-Xt_uBT7h_FlA&s.jpg')">More Info</button>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Car & Bike Rental System | All Rights Reserved</p>
+        <p>Contact: +91 9359407260 | Email: support@bikerentel.com</p>
+    </footer>
+
+    <script>
+        // Supabase Setup
+        const supabaseUrl = "https://sclsyqjoebcvvzfecanr.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbHN5cWpvZWJjdnZ6ZmVjYW5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0NDk2NzcsImV4cCI6MjA5MzAyNTY3N30.fAd_1wO-6LeIgX4dWiVlk1nAsWbTMRQGFy_eCnYGW6o";
+
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Rent Vehicle Function
+        async function rentVehicle(vehicleName, price) {
+            try {
+                const { data, error } = await supabase
+                    .from("rentals")
+                    .insert([
+                        {
+                            customer_name: "Guest User",
+                            customer_phone: "9999999999",
+                            vehicle_name: vehicleName,
+                            price_per_day: price,
+                            total_days: 1,
+                            total_price: price,
+                            status: "Booked"
+                        }
+                    ]);
+
+                if (error) throw error;
+
+                alert(vehicleName + " booked successfully!");
+                console.log(data);
+
+            } catch (error) {
+                alert("Error connecting to Supabase!");
+                console.error(error.message);
+            }
+        }
+
+        // Navigate to Details Page
+        function goToDetails(name, price, image) {
+            window.location.href = `details.html?name=${encodeURIComponent(name)}&price=${price}&image=${encodeURIComponent(image)}`;
+        }
+    </script>
+
+</body>
+</html>
